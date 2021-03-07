@@ -155,17 +155,31 @@
           const option = param.options[optionId];
           console.log(optionId, option);
 
+          // find image with class '.paramId-optionId
+          const image = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
+
           // check if optionId includes in formData[paramId]
           if(formData[paramId].includes(optionId)){
-            // true - check if option has key 'default': true - nothing happends, false - upper the price 
+            // true
+            // check if option has key 'default': true - nothing happends, false - upper the price 
             if(option.default !== true){
               price = price + option.price;
             }
+
+            // add class 'active' (use classNames.menuProduct.imageVisible) to image if this image exsist
+            if(image){
+              image.classList.add(classNames.menuProduct.imageVisible);
+            } 
           } else {
-            // false - check if option has key 'default': false - nothing happends, true - lower the price 
-            console.log('false', option.default);
+            // false
+            // check if option has key 'default': false - nothing happends, true - lower the price 
             if(option.default === true){
               price = price - option.price;
+            }
+
+            // remove class 'active' (use classNames.menuProduct.imageVisible) to image if this image exsist 
+            if(image){
+              image.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
         }
@@ -183,6 +197,7 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
   }
 
