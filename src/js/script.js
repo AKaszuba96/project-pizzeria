@@ -393,6 +393,11 @@
       thisCart.dom.productList.addEventListener('updated', function(){
         thisCart.update();
       });
+
+      thisCart.dom.productList.addEventListener('remove', function(event){
+        console.log('wychwycono event!');
+        thisCart.remove(event.detail.cartProduct);
+      });
     }
 
     add(menuProduct){
@@ -410,7 +415,7 @@
 
       /* add element to list of products */
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
-      console.log('thisCart.products:', thisCart.products);
+      // console.log('thisCart.products:', thisCart.products);
 
       /* update data in cart */
       thisCart.update();
@@ -430,19 +435,39 @@
 
       if(totalNumber !== 0){
         thisCart.totalPrice = subtotalPrice + deliveryFee;
+        thisCart.dom.deliveryFee.innerHTML = deliveryFee;
       } else{
         thisCart.totalPrice = subtotalPrice;
+        thisCart.dom.deliveryFee.innerHTML = 0;
       }
 
-      console.log('totalNumber:', totalNumber);
-      console.log('subtotalprice:', subtotalPrice);
-      console.log('thisCart.totalPrice:', thisCart.totalPrice);
-
-      thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+      // console.log('totalNumber:', totalNumber);
+      // console.log('subtotalprice:', subtotalPrice);
+      // console.log('thisCart.totalPrice:', thisCart.totalPrice);
+      
       thisCart.dom.totalNumber.innerHTML = totalNumber;
       thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
       thisCart.dom.totalPrice[0].innerHTML = thisCart.totalPrice;
       thisCart.dom.totalPrice[1].innerHTML = thisCart.totalPrice;
+    }
+
+    remove(removeProduct){
+      const thisCart = this;
+      
+      /* find index of the product in list */
+      const indexProduct = thisCart.products.indexOf(removeProduct);
+      console.log('index of removeProduct:', indexProduct);
+
+      /* remove product from list in HTML */
+      thisCart.dom.productList.removeChild(thisCart.dom.productList.childNodes[indexProduct+1]); 
+
+      /* remove product from list thisCart.products */
+      console.log(thisCart.products);
+      thisCart.products.splice(indexProduct, 1);
+      console.log(thisCart.products);
+
+      /* update data in cart */
+      thisCart.update();
     }
 
     getElements(element){
@@ -473,6 +498,7 @@
 
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
+      thisCartProduct.initActions();
       // console.log('cartProduct:', thisCartProduct);
     }
 
@@ -490,6 +516,33 @@
 
           thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
         }
+      });
+    }
+
+    remove(){
+      const thisCartProduct = this;
+
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
+      // console.log('Function remove in on!');
+    }
+
+    initActions(){
+      const thisCartProduct = this;
+
+      thisCartProduct.dom.edit.addEventListener('click', function(event){
+        event.preventDefault();
+      });
+      thisCartProduct.dom.remove.addEventListener('click', function(event){
+        event.preventDefault();
+
+        thisCartProduct.remove();
       });
     }
 
