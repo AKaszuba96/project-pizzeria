@@ -1,34 +1,41 @@
 import {settings, select} from '../settings.js';
+import BaseWidget from './BaseWidget.js';
 
-class AmountWidget{
+class AmountWidget extends BaseWidget{
   constructor(element){
+    super(element, settings.amountWidget.defaultValue); // uruchomienie constructora klasy z której dziedziczymy
+
     const thisWidget = this;
 
-    // console.log('AmountWidget:', thisWidget);
     // console.log('Constructor element:', element);
 
-    thisWidget.getElements(element);
-    thisWidget.setValue(settings.amountWidget.defaultValue);
+    thisWidget.getElements();
+    thisWidget.setValue(thisWidget.correctValue);
+    // thisWidget.setValue(settings.amountWidget.defaultValue);
     thisWidget.initActions();
+
+    // console.log('AmountWidget:', thisWidget);
   }
 
-  setValue(value){
+  isValid(value){
+    return  !(isNaN(value))
+      && value >= settings.amountWidget.defaultMin 
+      && value <= settings.amountWidget.defaultMax;
+  }
+
+  renderValue(){
     const thisWidget = this;
 
-    const newValue = parseInt(value);
-    
-    if(!(isNaN(newValue)) && newValue !== thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
-      thisWidget.value = newValue;
-      thisWidget.announce();
-    }
-    
     thisWidget.dom.input.value = thisWidget.value;
   }
 
   initActions(){
     const thisWidget = this;
 
-    thisWidget.dom.input.addEventListener('change', function(){thisWidget.setValue(thisWidget.dom.input.value);});
+    thisWidget.dom.input.addEventListener('change', function(){
+      // thisWidget.setValue(thisWidget.dom.input.value);
+      thisWidget.value = thisWidget.dom.input.value;
+    });
     
     thisWidget.dom.linkDecrease.addEventListener('click', function(event){
       event.preventDefault();
@@ -41,25 +48,14 @@ class AmountWidget{
     });
   }
 
-  announce(){
+  getElements(){
     const thisWidget = this;
 
-    // Create new event by class Event!! 
-    const event = new CustomEvent('updated', {
-      bubbles: true // dodanie bąbelkowania - ułatwia dostęp do zmian w koszyku
-    });
-    
-    thisWidget.dom.element.dispatchEvent(event);
-  }
-
-  getElements(element){
-    const thisWidget = this;
-
-    thisWidget.dom = {};
-    thisWidget.dom.element = element;
-    thisWidget.dom.input = thisWidget.dom.element.querySelector(select.widgets.amount.input);
-    thisWidget.dom.linkDecrease = thisWidget.dom.element.querySelector(select.widgets.amount.linkDecrease);
-    thisWidget.dom.linkIncrease = thisWidget.dom.element.querySelector(select.widgets.amount.linkIncrease);
+    // thisWidget.dom = {};
+    // thisWidget.dom.wrapper = element;
+    thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
+    thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
+    thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
   }
 }
 
