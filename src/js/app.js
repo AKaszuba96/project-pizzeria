@@ -1,8 +1,19 @@
-import {settings, select, classNames, templates} from './settings.js'; // import więcej niż jednej rzeczy i nie domyślych
+import {settings, select, classNames} from './settings.js'; // import więcej niż jednej rzeczy i nie domyślych
 import Product from './components/Product.js'; // import domyślnie exportowanego elementu
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 const app = {
+  initBooking: function(){
+
+    // const thisApp = this;
+
+    const bookingPage = document.querySelector(select.containerOf.booking);
+
+    new Booking(bookingPage);
+
+  },
+
   initPages: function(){
     const thisApp = this;
 
@@ -108,13 +119,11 @@ const app = {
     const thisApp = this;
     console.log('*** App starting ***');
     console.log('thisApp:', thisApp);
-    console.log('classNames:', classNames);
-    console.log('settings:', settings);
-    console.log('templates:', templates);
 
     thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
+    thisApp.initBooking();
   },
 };
 
