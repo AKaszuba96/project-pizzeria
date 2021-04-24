@@ -40,6 +40,11 @@ export const select = {
       input: 'input[type="range"]',
       output: '.output',
     },
+    formInputs: {
+      phone: '[name="phone"]',
+      address: '[name="address"]',
+    },
+    startersPickers: 'input[type="checkbox"]', //'input[type="checkbox"]'
   },
   cart: {
     productList: '.cart__order-summary',
@@ -62,7 +67,9 @@ export const select = {
   booking: {
     peopleAmount: '.people-amount',
     hoursAmount: '.hours-amount',
+    planTables: '.floor-plan',
     tables: '.floor-plan .table',
+    form: '.booking-form',
   },
   nav: {
     links: '.main-nav a',
@@ -80,6 +87,7 @@ export const classNames = {
   booking: {
     loading: 'loading',
     tableBooked: 'booked',
+    tableSelected: 'selected',
   },
   nav: {
     active: 'active',
@@ -114,10 +122,10 @@ export const settings = {
     order: 'order',
     booking: 'booking',
     event: 'event',
-    dateStartParamKey: 'date_gte',
-    dateEndParamKey: 'date_lte',
-    notRepeatParam: 'repeat=false',
-    repeatParam: 'repeat_ne=false',
+    dateStartParamKey: 'date_gte', // gte - większe bądź równe
+    dateEndParamKey: 'date_lte', // lte - mniejsze bądź równe
+    notRepeatParam: 'repeat=false', 
+    repeatParam: 'repeat_ne=false', // ne - negacja
   },
 };
 
