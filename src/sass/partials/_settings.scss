@@ -16,7 +16,7 @@ $font-normal: 400;
 $font-semibold: 500;
 $font-bold: 700;
 
-$transition: all .3s;
+$transition: all .5s;
 $radius: 4px;
 
 $base-size: 12px;
@@ -76,6 +76,11 @@ $base-size: 12px;
   transform: translate(0, 0);
   max-height: 1000px;
   opacity: 1;
+}
+
+@mixin cover-all() {
+  width: 100%;
+  height: 100%;
 }
 
 /* Helpers */

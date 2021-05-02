@@ -2,8 +2,15 @@ import {settings, select, classNames} from './settings.js'; // import więcej ni
 import Product from './components/Product.js'; // import domyślnie exportowanego elementu
 import Cart from './components/Cart.js';
 import Booking from './components/Booking.js';
+import Home from './components/Home.js';
 
 const app = {
+  initHome: function(){
+    const homePage = document.querySelector(select.containerOf.home);
+
+    new Home(homePage);
+  },
+
   initBooking: function(){
 
     // const thisApp = this;
@@ -124,8 +131,10 @@ const app = {
     thisApp.initData();
     thisApp.initCart();
     thisApp.initBooking();
+    thisApp.initHome();
   },
 };
 
 app.init();
 
+export default app;

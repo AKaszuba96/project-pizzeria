@@ -1,0 +1,150 @@
+.home-wrapper {
+  margin: ($base-size * 3.5) auto;
+  padding: ($base-size * 6) ($base-size * 4);
+  background: $color-light;
+  border-bottom: 1px solid lighten($color-dark, 70%);
+  border-radius: $radius;
+
+  /* GLOBAL */
+
+  img {
+    @include cover-all();
+    object-fit: cover;
+    border-radius: $radius;
+  }
+
+  /* SECTIONS */
+
+  .base-data {
+    text-align: center;
+    color: $color-light;
+    margin-bottom: 100px;
+
+    h2 {
+      text-transform: uppercase;
+      font-family: $font-header;
+      margin-bottom: 0;
+      font-weight: $font-semibold;
+    }
+    
+    h3 {
+      text-transform: uppercase;
+      margin-top: 0;
+      font-weight: $font-light;
+    }
+
+    .data-box {
+      margin: 3px;
+      background: $color-main;
+      border-radius: $radius;
+      height: 130px;
+      padding: 15px;
+      max-width: 99%;
+    }
+
+    .anim-box {
+      position: relative;
+      margin-bottom: 3px;
+      padding: 0 3px 0 3px;
+      height: 130px;
+
+      .text-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -30%);
+        transition: $transition;
+
+        p {
+          visibility: hidden;
+        } 
+      }
+
+      &:hover .text-box {
+        transform: translate(-50%, -50%);
+
+        p {
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  .main-carousel {
+    
+    .carousel-cell {
+      height: 200px;
+      width: 100%;
+
+      .image-box {
+        @include cover-all();
+      }
+
+      .opinion-box {
+        @include cover-all();
+      
+        h2 {
+          @extend .h2;
+        }
+  
+        .author {
+          font-style: italic;
+        }
+      }
+    }   
+  }
+
+  .gallery {
+    text-align: left;
+    margin-top: 100px;
+
+    .gallery-box {
+      position: relative;
+      height: 200px;
+      padding: 2px;
+      border-radius: $radius;
+      text-align: center;
+
+      .gallery-font {
+        @include center();
+        @include cover-all();
+        font-size: x-large;
+        color: $color-light;
+        border-radius: $radius;
+        transition: $transition;
+        
+        .font {
+          visibility: hidden;
+          position: absolute;
+          top: 45%;
+          
+          &:hover {
+            color: $color-main;
+          }
+        }
+
+        .fa-heart {
+          left: 30%;
+        }
+
+        .fa-share-alt {
+          left: 60%;
+        }
+      }
+
+      &:hover .gallery-font {
+        background-color: rgba(0,0,0, 0.3); /* Black background with opacity */
+        
+        .font {
+          visibility: visible;
+        } 
+      }
+    }
+
+    .link-quantity {
+      display: block;
+      margin-top: 25px;
+      color: $color-main;
+    }
+  }  
+}
